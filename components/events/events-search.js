@@ -1,5 +1,4 @@
 import { useRef } from 'react';
-
 import Button from '../ui/button';
 import classes from './events-search.module.css';
 

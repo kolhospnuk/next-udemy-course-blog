@@ -1,6 +1,4 @@
-import { Fragment } from 'react';
-
-import {getAllEvents, getEventById} from '../../dummy-data';
+import {getFeaturedEvents, getEventById} from '../../dummy-data';
 import EventSummary from '../../components/event-detail/event-summary';
 import EventLogistics from '../../components/event-detail/event-logistics';
 import EventContent from '../../components/event-detail/event-content';
@@ -16,7 +14,7 @@ function EventDetailPage({ event }) {
   }
 
   return (
-    <Fragment>
+    <>
       <EventSummary title={event.title} />
       <EventLogistics
         date={event.date}
@@ -27,7 +25,7 @@ function EventDetailPage({ event }) {
       <EventContent>
         <p>{event.description}</p>
       </EventContent>
-    </Fragment>
+    </>
   );
 }
 
@@ -39,18 +37,20 @@ export const getStaticProps = async (context) => {
   return {
     props: {
       event: event
-    }
+    },
+    revalidate: 30
   }
 }
 
 export const getStaticPaths = async () => {
-  const events = getAllEvents();
+  const events = await getFeaturedEvents();
+  console.log('events');
 
   const paths = events.map(event =>({ params: { eventId: event.id } }))
 
   return {
     paths: paths,
-    fallback: false
+    fallback: 'blocking'
   }
 }
 
