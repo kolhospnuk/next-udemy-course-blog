@@ -14,7 +14,7 @@ const HomePage = ({ events }) => {
 
   return (
     <div>
-      <EventsSearch onSeach={findEventsHandler} />
+      <EventsSearch onSearch={findEventsHandler} />
       <EventList items={events} />
     </div>
   );
